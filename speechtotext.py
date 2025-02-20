@@ -53,13 +53,13 @@ def split_audio(audio_path, max_bytes, audio_ext, options):
           add_chunk(current_chunk, audio_path, audio_ext, audio_chunks)
           current_chunk = next_chunk
 
-        if len(current_chunk) > max_chunk_milliseconds:
-          raw_split(current_chunk, max_chunk_milliseconds, audio_path, audio_ext, audio_chunks)
-        else:
-          add_chunk(current_chunk, audio_path, audio_ext, audio_chunks)
+      if len(current_chunk) > max_chunk_milliseconds:
+        raw_split(current_chunk, max_chunk_milliseconds, audio_path, audio_ext, audio_chunks)
+      else:
+        add_chunk(current_chunk, audio_path, audio_ext, audio_chunks)
 
-        if options['verbose']:
-          print(f'Total chunks: {len(audio_chunks)}\n')
+      if options['verbose']:
+        print(f'Total chunks: {len(audio_chunks)}\n')
   else:
     print("No need to split")
     audio_chunks.append(audio_path)
@@ -120,6 +120,9 @@ def process_audio_files(folder_path):
         final_transcription = " ".join(transcribed_texts)
         print(final_transcription)
         print()
+
+        transcribed_texts = []
+        final_transcription = ""
     
       except Exception as e:
         print(f"Error reading {filename}: {e}")
