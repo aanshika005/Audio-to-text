@@ -118,9 +118,17 @@ def process_audio_files(folder_path):
           transcribed_texts.append(text)
 
         final_transcription = " ".join(transcribed_texts)
-        print(final_transcription)
-        print()
+        
+        text_filename = f"{os.path.splitext(file_path)[0]}.txt"
+        with open(text_filename, "w", encoding="utf-8") as text_file:
+          text_file.write(final_transcription)
+          print(f"Transcription saved to {text_filename}\n")
 
+        # Clean up chunk files
+        for chunk in audio_chunks:
+          if chunk != file_path:
+            os.remove(chunk)
+            
         transcribed_texts = []
         final_transcription = ""
     
